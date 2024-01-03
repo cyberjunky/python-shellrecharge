@@ -1,0 +1,19 @@
+[project]
+name = "python-shellrechargeev"
+version = "0.1.0"
+description = "Python 3 package to retrieve public EV charger data from Shell Recharge"
+authors = [
+    {name = "cyberjunky", email = "ron@cyberjunky.nl"},
+]
+dependencies = []
+requires-python = ">=3.10"
+readme = "README.md"
+license = {text = "MIT"}
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+
+[tool.pdm]
+package-type = "library"
