@@ -1,12 +1,20 @@
 [project]
 name = "python-shellrechargeev"
-version = "0.1.0"
+version = "0.1.1"
 description = "Python 3 package to retrieve public EV charger data from Shell Recharge"
 authors = [
     {name = "cyberjunky", email = "ron@cyberjunky.nl"},
 ]
-dependencies = []
+dependencies = [
+    "aiohttp",
+    "yarl",
+    "pydantic>=1.0.0, <3.0.0",
+]
 requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3.10",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)"
+]
 readme = "README.md"
 license = {text = "MIT"}
 
