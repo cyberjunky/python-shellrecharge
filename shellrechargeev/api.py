@@ -38,7 +38,10 @@ class Api:
 
             if response.status == 200:
                 result = await response.json()
-                location_data = Location.model_validate(result)
+                if pydantic.version.VERSION.startswith("1"):
+                    location_data = Location.parse_obj(result)
+                else:
+                    location_data = Location.model_validate(result)
             else:
                 self.logger.exception("Error %s on %s", response.status, url)
 
