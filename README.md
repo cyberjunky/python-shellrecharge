@@ -1,4 +1,4 @@
-# python-shellrechargeev
+# Python: Shell Recharge
 Python 3 package to retrieve public EV charger data from Shell Recharge
 
 [![GitHub Release][releases-shield]][releases]
