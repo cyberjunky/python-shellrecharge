@@ -18,18 +18,14 @@ class Api:
         self.websession = websession
         self.logger = logging.getLogger("shellrechargeev")
 
-    async def location_by_id(
-        self, location_id: str, **kwargs
-    ) -> list[Location]:
+    async def location_by_id(self, location_id: str, **kwargs) -> Location:
         """
         Perform API request.
         Usually yields just one Location object and one or multiple chargers.
         """
 
         location_data = {}
-        url_template = (
-            "https://ui-map.shellrecharge.com/api/map/v2/locations/{}"
-        )
+        url_template = "https://ui-map.shellrecharge.com/api/map/v2/locations/{}"
         url = URL(url_template.format(location_id))
 
         try:

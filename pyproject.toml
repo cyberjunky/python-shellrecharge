@@ -1,6 +1,6 @@
 [project]
 name = "python-shellrechargeev"
-version = "0.1.4"
+version = "0.1.5"
 description = "Python 3 package to retrieve public EV charger data from Shell Recharge"
 authors = [
     {name = "cyberjunky", email = "ron@cyberjunky.nl"},

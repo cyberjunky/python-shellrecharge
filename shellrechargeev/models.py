@@ -27,8 +27,6 @@ ConnectorTypes = Literal[
 ]
 UpdatedBy = Literal["Feed", "Admin", "TariffService", "Default"]
 
-# AuthMethods = Literal["NewMotionApp", "RFIDToken", "PnC"]
-
 if pydantic.version.VERSION.startswith("1"):
     EvseId = constr(
         regex=r"^(([A-Z]{2}\*?[A-Z0-9]{3}\*?E[A-Z0-9\*]{1,30})|(\+?[0-9]{1,3}\*[0-9]{3}\*[0-9\*]{1,32}))$"
