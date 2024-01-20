@@ -42,20 +42,20 @@ make codespell
 Below provides example on how to use the library.  
 
 ```
-import sys
-import shellrechargeev
-import aiohttp
+#!/usr/bin/env python3
+"""Example code."""
 import asyncio
 import logging
+import sys
+
+import aiohttp
+
+import shellrechargeev
 
 
 async def main():
-    location_ids = [
-        "3321718",
-        "3357677",
-        "2875456",
-        "2746503",
-    ]
+    """Main module."""
+    location_ids = ["9b9428ab-1dfd-4230-a024-084eacf776ff"]
 
     async with aiohttp.ClientSession() as session:
         api = shellrechargeev.Api(session)
@@ -63,6 +63,7 @@ async def main():
         for location_id in location_ids:
             locations = await api.location_by_id(location_id)
             print(locations)
+
 
 if __name__ == "__main__":
     logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)

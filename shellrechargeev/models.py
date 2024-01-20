@@ -1,7 +1,7 @@
+"""Models for pydantic parsing."""
 from typing import Literal, Optional
 
-import pydantic
-from pydantic import BaseModel, confloat, constr
+from pydantic import BaseModel, confloat
 
 DateTimeISO8601 = str
 Status = Literal["Available", "Unavailable", "Occupied", "Unknown"]
@@ -27,17 +27,9 @@ ConnectorTypes = Literal[
 ]
 UpdatedBy = Literal["Feed", "Admin", "TariffService", "Default"]
 
-if pydantic.version.VERSION.startswith("1"):
-    EvseId = constr(
-        regex=r"^(([A-Z]{2}\*?[A-Z0-9]{3}\*?E[A-Z0-9\*]{1,30})|(\+?[0-9]{1,3}\*[0-9]{3}\*[0-9\*]{1,32}))$"
-    )
-else:
-    EvseId = constr(
-        pattern=r"^(([A-Z]{2}\*?[A-Z0-9]{3}\*?E[A-Z0-9\*]{1,30})|(\+?[0-9]{1,3}\*[0-9]{3}\*[0-9\*]{1,32}))$"
-    )
-
 
 class ElectricalProperties(BaseModel):
+    """Plugs and specs."""
     powerType: str
     voltage: int
     amperage: float
@@ -45,6 +37,7 @@ class ElectricalProperties(BaseModel):
 
 
 class Tariff(BaseModel):
+    """Tariff information."""
     perKWh: float
     currency: str
     updated: DateTimeISO8601
@@ -53,6 +46,7 @@ class Tariff(BaseModel):
 
 
 class Connector(BaseModel):
+    """Connector instance."""
     uid: int
     externalId: str
     connectorType: ConnectorTypes
@@ -65,9 +59,10 @@ class Connector(BaseModel):
 
 
 class Evse(BaseModel):
+    """Evse instance."""
     uid: int
     externalId: str
-    evseId: EvseId
+    evseId: str
     status: Status
     connectors: list[Connector]
     authorizationMethods: list[str]
@@ -76,11 +71,13 @@ class Evse(BaseModel):
 
 
 class Coordinates(BaseModel):
+    """Location."""
     latitude: confloat(ge=-90, le=90)
     longitude: confloat(ge=-180, le=180)
 
 
 class Address(BaseModel):
+    """Address."""
     streetAndNumber: str
     postalCode: str
     city: str
@@ -88,22 +85,26 @@ class Address(BaseModel):
 
 
 class Accessibility(BaseModel):
+    """Accessibility."""
     status: str
     remark: Optional[str] = ""
     statusV2: str
 
 
 class AccessibilityV2(BaseModel):
+    """Accessibility Version2."""
     status: str
 
 
 class OpeningHours(BaseModel):
+    """Opening Hours."""
     weekDay: str
     startTime: str
     endTime: str
 
 
 class PredictedOccupancies(BaseModel):
+    """Predicted Occupancies."""
     weekDay: str
     occupancy: int
     startTime: str
@@ -111,6 +112,7 @@ class PredictedOccupancies(BaseModel):
 
 
 class Location(BaseModel):
+    """Location data."""
     uid: int
     externalId: int | str
     coordinates: Coordinates
@@ -127,7 +129,6 @@ class Location(BaseModel):
     supportPhoneNumber: str
     facilities: Optional[list[str]] = []
     predictedOccupancies: list[PredictedOccupancies]
-    vat: float
     suboperatorName: Optional[str] = ""
     countryCode: str
     partyId: str
