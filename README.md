@@ -15,7 +15,7 @@ I build it to create a home-assistant integration, it can be done with rest call
 ## Installation
 
 ```bash
-pip3 install python-shellrechargeev
+pip3 install python-shellrecharge
 ```
 
 
@@ -50,7 +50,7 @@ import sys
 
 import aiohttp
 
-import shellrechargeev
+import shellrecharge
 
 
 async def main():
@@ -58,7 +58,7 @@ async def main():
     location_ids = ["9b9428ab-1dfd-4230-a024-084eacf776ff"]
 
     async with aiohttp.ClientSession() as session:
-        api = shellrechargeev.Api(session)
+        api = shellrecharge.Api(session)
 
         for location_id in location_ids:
             locations = await api.location_by_id(location_id)
@@ -76,12 +76,12 @@ if __name__ == "__main__":
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/cyberjunkynl/)  
 [![Sponsor][sponsor-shield]][sponsor]
 
-[python-shellrechargeev]: https://github.com/cyberjunky/python-shellrechargeev
-[commits-shield]: https://img.shields.io/github/commit-activity/y/cyberjunky/python-shellrechargeev.svg?style=for-the-badge
-[commits]: https://github.com/cyberjunky/python-shellrechargeev/commits/main
-[license-shield]: https://img.shields.io/github/license/cyberjunky/python-shellrechargeev.svg?style=for-the-badge
+[python-shellrecharge]: https://github.com/cyberjunky/python-shellrecharge
+[commits-shield]: https://img.shields.io/github/commit-activity/y/cyberjunky/python-shellrecharge.svg?style=for-the-badge
+[commits]: https://github.com/cyberjunky/python-shellrecharge/commits/main
+[license-shield]: https://img.shields.io/github/license/cyberjunky/python-shellrecharge.svg?style=for-the-badge
 [maintenance-shield]: https://img.shields.io/badge/maintainer-%40cyberjunky-blue.svg?style=for-the-badge
-[releases-shield]: https://img.shields.io/github/release/cyberjunky/python-shellrechargeev.svg?style=for-the-badge
-[releases]: https://github.com/cyberjunky/python-shellrechargeev/releases
+[releases-shield]: https://img.shields.io/github/release/cyberjunky/python-shellrecharge.svg?style=for-the-badge
+[releases]: https://github.com/cyberjunky/python-shellrecharge/releases
 [sponsor-shield]: https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86
 [sponsor]: https://github.com/sponsors/cyberjunky

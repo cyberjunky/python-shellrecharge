@@ -6,7 +6,7 @@ import sys
 
 import aiohttp
 
-import shellrechargeev
+import shellrecharge
 
 
 async def main():
@@ -14,7 +14,7 @@ async def main():
     location_ids = ["9b9428ab-1dfd-4230-a024-084eacf776ff"]
 
     async with aiohttp.ClientSession() as session:
-        api = shellrechargeev.Api(session)
+        api = shellrecharge.Api(session)
 
         for location_id in location_ids:
             locations = await api.location_by_id(location_id)

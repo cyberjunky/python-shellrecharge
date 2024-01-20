@@ -1,4 +1,4 @@
-"""The main API code."""
+"""The shellrecharge API code."""
 import asyncio
 import logging
 
@@ -17,7 +17,7 @@ class Api:
     def __init__(self, websession: ClientSession):
         """Initialize the session."""
         self.websession = websession
-        self.logger = logging.getLogger("shellrechargeev")
+        self.logger = logging.getLogger("shellrecharge")
 
     async def location_by_id(self, location_id: str) -> Location:
         """
@@ -34,10 +34,11 @@ class Api:
 
             if response.status == 200:
                 result = await response.json()
-                if pydantic.version.VERSION.startswith("1"):
-                    location_data = Location.parse_obj(result[0])
-                else:
-                    location_data = Location.model_validate(result[0])
+                if result:
+                    if pydantic.version.VERSION.startswith("1"):
+                        location_data = Location.parse_obj(result[0])
+                    else:
+                        location_data = Location.model_validate(result[0])
             else:
                 self.logger.exception("Error %s on %s", response.status, url)
 
@@ -45,7 +46,6 @@ class Api:
             # Fetched data not valid
             self.logger.exception(err)
             raise err
-
         except (
             ClientError,
             asyncio.TimeoutError,

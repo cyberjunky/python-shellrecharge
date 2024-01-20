@@ -1,6 +1,6 @@
 [project]
-name = "python-shellrechargeev"
-version = "0.1.6"
+name = "shellrecharge"
+version = "0.1.7"
 description = "Python 3 package to retrieve public EV charger data from Shell Recharge"
 authors = [
     {name = "cyberjunky", email = "ron@cyberjunky.nl"},
@@ -11,6 +11,9 @@ dependencies = [
     "pydantic>=1.0.0, <3.0.0",
 ]
 requires-python = ">=3.10"
+[project.urls]
+"Homepage" = "https://github.com/cyberjunky/python-shellrecharge"
+"Bug Tracker" = "https://github.com/cyberjunky/python-shellrecharge/issues"
 classifiers = [
     "Programming Language :: Python :: 3.10",
     "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)"

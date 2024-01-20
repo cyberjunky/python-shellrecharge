@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := all
-sources = shellrechargeev
+sources = shellrecharge
 
 .PHONY: .pdm  ## Check that PDM is installed
 .pdm:
