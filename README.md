@@ -15,7 +15,7 @@ I build it to create a home-assistant integration, it can be done with rest call
 ## Installation
 
 ```bash
-pip3 install python-shellrecharge
+pip3 install shellrecharge
 ```
 
 
