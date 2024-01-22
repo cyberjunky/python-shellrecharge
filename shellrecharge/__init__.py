@@ -25,7 +25,9 @@ class Api:
         Usually yields just one Location object with one or multiple chargers.
         """
         location_data = {}
-        url_template = "https://ui-map.shellrecharge.com/api/map/v2/locations/search/{}"
+        url_template = (
+            "https://ui-map.shellrecharge.com/api/map/v2/locations/search/{}"
+        )
         url = URL(url_template.format(location_id))
 
         try:
@@ -48,8 +50,8 @@ class Api:
             raise err
         except (
             ClientError,
-            asyncio.TimeoutError,
-            asyncio.CancelledError,
+            TimeoutError,
+            asyncio.exceptions.CancelledError,
         ) as err:
             self.logger.exception(err)
             raise err

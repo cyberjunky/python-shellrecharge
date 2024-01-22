@@ -30,6 +30,7 @@ UpdatedBy = Literal["Feed", "Admin", "TariffService", "Default"]
 
 class ElectricalProperties(BaseModel):
     """Plugs and specs."""
+
     powerType: str
     voltage: int
     amperage: float
@@ -38,6 +39,7 @@ class ElectricalProperties(BaseModel):
 
 class Tariff(BaseModel):
     """Tariff information."""
+
     perKWh: float
     currency: str
     updated: DateTimeISO8601
@@ -47,6 +49,7 @@ class Tariff(BaseModel):
 
 class Connector(BaseModel):
     """Connector instance."""
+
     uid: int
     externalId: str
     connectorType: ConnectorTypes
@@ -60,6 +63,7 @@ class Connector(BaseModel):
 
 class Evse(BaseModel):
     """Evse instance."""
+
     uid: int
     externalId: str
     evseId: str
@@ -72,12 +76,14 @@ class Evse(BaseModel):
 
 class Coordinates(BaseModel):
     """Location."""
+
     latitude: confloat(ge=-90, le=90)
     longitude: confloat(ge=-180, le=180)
 
 
 class Address(BaseModel):
     """Address."""
+
     streetAndNumber: str
     postalCode: str
     city: str
@@ -86,6 +92,7 @@ class Address(BaseModel):
 
 class Accessibility(BaseModel):
     """Accessibility."""
+
     status: str
     remark: Optional[str] = ""
     statusV2: str
@@ -93,11 +100,13 @@ class Accessibility(BaseModel):
 
 class AccessibilityV2(BaseModel):
     """Accessibility Version2."""
+
     status: str
 
 
 class OpeningHours(BaseModel):
     """Opening Hours."""
+
     weekDay: str
     startTime: str
     endTime: str
@@ -105,6 +114,7 @@ class OpeningHours(BaseModel):
 
 class PredictedOccupancies(BaseModel):
     """Predicted Occupancies."""
+
     weekDay: str
     occupancy: int
     startTime: str
@@ -113,6 +123,7 @@ class PredictedOccupancies(BaseModel):
 
 class Location(BaseModel):
     """Location data."""
+
     uid: int
     externalId: int | str
     coordinates: Coordinates
