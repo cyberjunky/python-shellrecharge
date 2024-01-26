@@ -1,5 +1,5 @@
 """Models for pydantic parsing."""
-from typing import Literal, Optional
+from typing import Literal, Optional, Type
 
 from pydantic import BaseModel, confloat
 
@@ -77,8 +77,8 @@ class Evse(BaseModel):
 class Coordinates(BaseModel):
     """Location."""
 
-    latitude: confloat(ge=-90, le=90)
-    longitude: confloat(ge=-180, le=180)
+    latitude: Type[float] = confloat(ge=-90, le=90)
+    longitude: Type[float] = confloat(ge=-180, le=180)
 
 
 class Address(BaseModel):
