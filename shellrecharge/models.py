@@ -74,33 +74,11 @@ class Evse(BaseModel):
     updated: DateTimeISO8601
 
 
-# class Coordinate(ConstrainedFloat):
-#     ge = -90
-#     le = 90
-
-
-#     latitude: confloat(ge=-90, le=90)
-#     longitude: confloat(ge=-180, le=180)
-
-# class MyStuff(BaseModel):
-#     dept: DeptNumber
-
-
 class Coordinates(BaseModel):
     """Location."""
 
-    # latitude: confloat(ge=-90, le=90)
-    # longitude: confloat(ge=-180, le=180)
-
     latitude: float = Field(ge=-90, le=90)
     longitude: float = Field(ge=-180, le=180)
-
-
-# class Coordinates(BaseModel):
-#     """Location."""
-
-#     latitude: Coordinate
-#     longitude: Coordinate
 
 
 class Address(BaseModel):
