@@ -1,7 +1,7 @@
 """Models for pydantic parsing."""
-from typing import Literal, Optional, Type
+from typing import Literal, Optional
 
-from pydantic import BaseModel, confloat
+from pydantic import BaseModel, Field
 
 DateTimeISO8601 = str
 Status = Literal["Available", "Unavailable", "Occupied", "Unknown"]
@@ -74,11 +74,33 @@ class Evse(BaseModel):
     updated: DateTimeISO8601
 
 
+# class Coordinate(ConstrainedFloat):
+#     ge = -90
+#     le = 90
+
+
+#     latitude: confloat(ge=-90, le=90)
+#     longitude: confloat(ge=-180, le=180)
+
+# class MyStuff(BaseModel):
+#     dept: DeptNumber
+
+
 class Coordinates(BaseModel):
     """Location."""
 
-    latitude: Type[float] = confloat(ge=-90, le=90)
-    longitude: Type[float] = confloat(ge=-180, le=180)
+    # latitude: confloat(ge=-90, le=90)
+    # longitude: confloat(ge=-180, le=180)
+
+    latitude: float = Field(ge=-90, le=90)
+    longitude: float = Field(ge=-180, le=180)
+
+
+# class Coordinates(BaseModel):
+#     """Location."""
+
+#     latitude: Coordinate
+#     longitude: Coordinate
 
 
 class Address(BaseModel):
