@@ -11,7 +11,10 @@ import shellrecharge
 
 async def main():
     """Main module."""
-    location_ids = ["9b9428ab-1dfd-4230-a024-084eacf776ff"]
+    location_ids = [
+        "9b9428ab-1dfd-4230-a024-084eacf776ff",
+        "682154"
+    ]
 
     async with aiohttp.ClientSession() as session:
         api = shellrecharge.Api(session)

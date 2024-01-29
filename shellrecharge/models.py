@@ -40,7 +40,9 @@ class ElectricalProperties(BaseModel):
 class Tariff(BaseModel):
     """Tariff information."""
 
-    perKWh: float
+    startFee: Optional[float] = 0.0
+    perMinute: Optional[float] = 0.0
+    perKWh: Optional[float] = 0.0
     currency: str
     updated: DateTimeISO8601
     updatedBy: UpdatedBy
@@ -133,13 +135,13 @@ class Location(BaseModel):
     accessibility: Accessibility
     accessibilityV2: AccessibilityV2
     evses: list[Evse]
-    openTwentyFourSeven: bool
-    openingHours: list[OpeningHours]
+    openTwentyFourSeven: Optional[bool] = True
+    openingHours: Optional[list[OpeningHours]] = []
     updated: DateTimeISO8601
     locationType: str
     supportPhoneNumber: str
     facilities: Optional[list[str]] = []
-    predictedOccupancies: list[PredictedOccupancies]
+    predictedOccupancies: Optional[list[PredictedOccupancies]] = []
     suboperatorName: Optional[str] = ""
     countryCode: str
     partyId: str
