@@ -6,6 +6,7 @@ import pydantic
 from aiohttp import ClientSession
 from aiohttp.client_exceptions import ClientError
 from aiohttp_retry import ExponentialRetry, RetryClient
+from pydantic import ValidationError
 from yarl import URL
 
 from .models import Location
@@ -25,16 +26,17 @@ class Api:
         Usually yields just one Location object with one or multiple chargers.
         """
         location = None
-        url_template = (
-            "https://ui-map.shellrecharge.com/api/map/v2/locations/search/{}"
-        )
-        url = URL(url_template.format(location_id))
-        retry_options = ExponentialRetry(attempts=3, start_timeout=5)
 
-        try:
-            retry_client = RetryClient(
-                client_session=self.websession, retry_options=retry_options
+        url = URL(
+            "https://ui-map.shellrecharge.com/api/map/v2/locations/search/{}".format(
+                location_id
             )
+        )
+        retry_client = RetryClient(
+            client_session=self.websession,
+            retry_options=ExponentialRetry(attempts=3, start_timeout=5),
+        )
+        try:
             async with retry_client.get(url) as response:
                 if response.status == 200:
                     result = await response.json()
@@ -43,17 +45,16 @@ class Api:
                             location = Location.parse_obj(result[0])
                         else:
                             location = Location.model_validate(result[0])
+                    else:
+                        raise LocationEmptyError()
                 else:
                     self.logger.exception(
                         "HTTPError %s occurred while requesting %s",
                         response.status,
                         url,
                     )
-
-        except pydantic.ValidationError as err:
-            # Fetched data not valid
-            self.logger.exception(err)
-            raise err
+        except ValidationError as err:
+            raise LocationValidationError(err)
         except (
             ClientError,
             TimeoutError,
@@ -63,3 +64,15 @@ class Api:
             raise err
 
         return location
+
+
+class LocationEmptyError(Exception):
+    """Raised when returned Location API data is empty."""
+
+    pass
+
+
+class LocationValidationError(Exception):
+    """Raised when returned Location API data is in the wrong format."""
+
+    pass

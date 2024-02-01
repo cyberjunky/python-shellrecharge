@@ -45,7 +45,7 @@ publish: .pdm
 	twine upload dist/*
 
 .PHONY: all  ## Run the standard set of checks performed in CI
-all: lint typecheck codespell
+all: lint codespell
 
 .PHONY: clean  ## Clear local caches and build artifacts
 clean:
@@ -54,19 +54,14 @@ clean:
 	find . -type f -name '*~' -exec rm -f {} +
 	find . -type f -name '.*~' -exec rm -f {} +
 	rm -rf .cache
+	rm -rf .mypy_cache
+	rm -rf .pdm-build
 	rm -rf .pytest_cache
 	rm -rf .ruff_cache
-	rm -rf htmlcov
 	rm -rf *.egg-info
-	rm -f .coverage
-	rm -f .coverage.*
 	rm -rf build
 	rm -rf dist
 	rm -rf site
-	rm -rf docs/_build
-	rm -rf docs/.changelog.md docs/.version.md docs/.tmp_schema_mappings.html
-	rm -rf fastapi/test.db
-	rm -rf coverage.xml
 
 .PHONY: help  ## Display this message
 help:

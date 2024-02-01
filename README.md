@@ -33,13 +33,11 @@ pip3 install pre-commit
 ```
 Run checks before PR/Commit:
 ```
-make format
-make lint
-make codespell
+make all
 ```
 
 ## Example
-Below provides example on how to use the library.  
+Below provides example on how to use the library.
 
 ```
 #!/usr/bin/env python3
@@ -47,22 +45,33 @@ Below provides example on how to use the library.
 import asyncio
 import logging
 import sys
+from asyncio import CancelledError
 
 import aiohttp
+from aiohttp.client_exceptions import ClientError
 
 import shellrecharge
+from shellrecharge import LocationEmptyError, LocationValidationError
 
 
 async def main():
     """Main module."""
-    location_ids = ["9b9428ab-1dfd-4230-a024-084eacf776ff"]
+
+    # Some random stations
+    location_ids = ["9b9428ab-1dfd-4230-a024-084eacf776ff", "682154", "9cf6c16b-b043-4ba8-b7ca-872f82a0faf4"]
 
     async with aiohttp.ClientSession() as session:
-        api = shellrecharge.Api(session)
-
-        for location_id in location_ids:
-            locations = await api.location_by_id(location_id)
-            print(locations)
+        try:
+            api = shellrecharge.Api(session)
+            for location_id in location_ids:
+                location = await api.location_by_id(location_id)
+                logging.info(location)
+        except LocationEmptyError:
+            logging.error("No data returned, check location id")
+        except LocationValidationError as err:
+            logging.error("Location validation error {}" % err)
+        except (ClientError, TimeoutError, CancelledError) as err:
+            logging.error(err)
 
 
 if __name__ == "__main__":
@@ -73,7 +82,7 @@ if __name__ == "__main__":
 
 ## Donations
 
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/cyberjunkynl/)  
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/cyberjunkynl/)
 [![Sponsor][sponsor-shield]][sponsor]
 
 [python-shellrecharge]: https://github.com/cyberjunky/python-shellrecharge
