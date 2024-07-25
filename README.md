@@ -24,6 +24,8 @@ pip3 install shellrecharge
 To create a development environment to commit code.
 
 ```
+python3 -m venv .venv
+source .venv/bin/activate
 pip3 install pdm
 pip3 install ruff
 pdm init
