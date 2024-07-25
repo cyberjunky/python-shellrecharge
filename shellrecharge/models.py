@@ -139,7 +139,7 @@ class Location(BaseModel):
     openingHours: Optional[list[OpeningHours]] = []
     updated: DateTimeISO8601
     locationType: str
-    supportPhoneNumber: str
+    supportPhoneNumber: Optional[str] = ""
     facilities: Optional[list[str]] = []
     predictedOccupancies: Optional[list[PredictedOccupancies]] = []
     suboperatorName: Optional[str] = ""
