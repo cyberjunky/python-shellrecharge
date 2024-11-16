@@ -1,4 +1,5 @@
 """The shellrecharge API code."""
+
 import logging
 from asyncio import CancelledError, TimeoutError
 
@@ -10,6 +11,7 @@ from pydantic import ValidationError
 from yarl import URL
 
 from .models import Location
+from .user import User
 
 
 class Api:
@@ -64,6 +66,11 @@ class Api:
             raise err
 
         return location
+
+    async def get_user(self, email: str, pwd: str) -> User:
+        user = User(email, pwd, self.websession)
+        await user.authenticate()
+        return user
 
 
 class LocationEmptyError(Exception):
