@@ -1,11 +1,13 @@
 from asyncio import new_event_loop
-from logging import basicConfig, DEBUG, error, info
+from logging import DEBUG, basicConfig, error, info
 from os import getenv
 from sys import stdout
 
 from aiohttp import ClientSession
+
 from shellrecharge import Api
 from shellrecharge.user import LoginFailedError
+
 
 async def main():
     async with ClientSession() as session:
