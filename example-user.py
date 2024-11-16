@@ -1,5 +1,5 @@
 from asyncio import new_event_loop
-from logging import basicConfig, DEBUG, error
+from logging import basicConfig, DEBUG, error, info
 from os import getenv
 from sys import stdout
 
@@ -12,8 +12,14 @@ async def main():
         try:
             api = Api(session)
             usr = await api.get_user(getenv("SHELL_USER"), getenv("SHELL_PWD"))
-            [print(card) async for card in usr.get_cards()]
-            [print(charger) async for charger in usr.get_chargers()]
+            cards = [card async for card in usr.get_cards()]
+            chargers = [charger async for charger in usr.get_chargers()]
+
+            info(cards[0])
+            info(chargers[0])
+
+            await usr.toggle_charger(chargers[0]["id"], cards[0]["rfid"], "start")
+
         except LoginFailedError:
             error("Login failed, check your credentials")
 
