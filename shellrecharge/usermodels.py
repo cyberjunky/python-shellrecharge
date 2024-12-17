@@ -6,9 +6,7 @@ from pydantic import UUID4, BaseModel, Field
 
 DateTimeISO8601 = str
 ChargePointStatus = Literal["Available", "Unavailable", "Occupied", "Unknown"]
-ChargePointDetailedStatus = Literal[
-    "available", "preparing", "charging", "suspendedev"
-]
+ChargePointDetailedStatus = Literal["available", "preparing", "charging", "suspendedev"]
 Vendor = Literal["NewMotion"]
 
 

@@ -30,9 +30,7 @@ format: .pdm
 
 .PHONY: lint  ## Lint python source files
 lint: .pdm
-	pdm run isort --check-only $(sources)
 	pdm run ruff check $(sources)
-	pdm run black -l 79 $(sources) --check --diff
 	pdm run mypy $(sources)
 
 .PHONY: codespell  ## Use Codespell to do spellchecking

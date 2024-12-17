@@ -1,4 +1,5 @@
 # Python: Shell Recharge
+
 Python 3 package to retrieve public EV charger data from Shell Recharge
 
 [![GitHub Release][releases-shield]][releases]
@@ -18,12 +19,11 @@ I build it to create a home-assistant integration, it can be done with rest call
 pip3 install shellrecharge
 ```
 
-
 ## Development
 
 To create a development environment to commit code.
 
-```
+```bash
 python3 -m venv .venv
 source .venv/bin/activate
 pip3 install pdm
@@ -33,15 +33,18 @@ pdm init
 sudo apt install pre-commit
 pip3 install pre-commit
 ```
+
 Run checks before PR/Commit:
-```
+
+```bash
 make all
 ```
 
 ## Example
+
 Below provides example on how to use the library.
 
-```
+```python
 #!/usr/bin/env python3
 """Example code."""
 import asyncio
@@ -87,7 +90,6 @@ if __name__ == "__main__":
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/cyberjunkynl/)
 [![Sponsor][sponsor-shield]][sponsor]
 
-[python-shellrecharge]: https://github.com/cyberjunky/python-shellrecharge
 [commits-shield]: https://img.shields.io/github/commit-activity/y/cyberjunky/python-shellrecharge.svg?style=for-the-badge
 [commits]: https://github.com/cyberjunky/python-shellrecharge/commits/main
 [license-shield]: https://img.shields.io/github/license/cyberjunky/python-shellrecharge.svg?style=for-the-badge

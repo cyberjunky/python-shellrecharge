@@ -47,9 +47,7 @@ class User:
             raise ShellPageChangedError()
 
         # Find the var declaration for lift_page
-        script_text = soup.find(
-            "script", string=compile(r"var\s+lift_page\s*=\s*")
-        )
+        script_text = soup.find("script", string=compile(r"var\s+lift_page\s*=\s*"))
         if type(script_text) is not Tag:
             raise ShellPageChangedError()
         lift_page_match = search(
