@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+"""Example code for private charger."""
 from asyncio import new_event_loop
 from logging import DEBUG, basicConfig, error, info
 from os import getenv
