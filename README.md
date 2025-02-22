@@ -19,6 +19,16 @@ I build it to create a home-assistant integration, it can be done with rest call
 pip3 install shellrecharge
 ```
 
+## Configuration
+
+Find the EV charger(s) you want to monitor here: https://shellrecharge.com/en-gb/find-a-charge-point look for the Serial number under details section.
+Then use Add device within Home Assistant and enter the Serial number in the form.
+
+Example:
+
+![image](https://github.com/user-attachments/assets/33dc84d1-319e-4100-ba60-86fbefcdf04e)
+
+
 ## Development
 
 To create a development environment to commit code.
