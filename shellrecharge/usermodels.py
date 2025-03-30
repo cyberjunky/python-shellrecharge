@@ -13,15 +13,17 @@ Vendor = Literal["NewMotion"]
 class ChargeToken(BaseModel):
     """Charge card."""
 
-    uuid: Optional[str] = None
+    uuid: str = None
     rfid: str
     printedNumber: str
-    name: Optional[str] = None
+    name: str = None
 
 
-class OccupyingToken(ChargeToken):
+class OccupyingToken(BaseModel):
     """Charge card occupying a charger"""
 
+    rfid: Optional[str] = None
+    printedNumber: Optional[str] = None
     timestamp: DateTimeISO8601
 
 
