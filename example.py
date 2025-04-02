@@ -27,7 +27,7 @@ async def main():
         except LocationEmptyError:
             logging.error("No data returned, check location id")
         except LocationValidationError as err:
-            logging.error("Location validation error {}, report location id" % err)
+            logging.error("Location validation error %s, report location id" % err)
         except (ClientError, TimeoutError, CancelledError) as err:
             logging.error(err)
 
