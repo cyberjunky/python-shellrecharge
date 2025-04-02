@@ -19,17 +19,17 @@ class User:
     assetUrl = "https://ui-chargepoints.shellrecharge.com"
     userAgent = "Mozilla/5.0 (X11; Linux x86_64; rv:131.0) Gecko/20100101 Firefox/131.0"
 
-    def __init__(self, email: str, pwd: str, session: ClientSession):
+    def __init__(self, email: str, pwd: str, websession: ClientSession):
         """Initialize user"""
         self.logger = getLogger("user")
-        self.session = session
+        self.websession = websession
         self.__email = email
         self.__pwd = pwd
 
     async def authenticate(self) -> None:
         """Authenticate using email and password and retrieve an api key"""
         headers = {"User-Agent": self.userAgent}
-        async with self.session.get(self.accountUrl, headers=headers) as r:
+        async with self.websession.get(self.accountUrl, headers=headers) as r:
             page = await r.text()
 
         # Make soup
@@ -64,7 +64,7 @@ class User:
             login_hidden.get("name"): True,
         }
 
-        async with self.session.post(
+        async with self.websession.post(
             f"{self.accountUrl}/ajax_request/{lift_page}-00",
             headers=headers,
             data=form_data,
@@ -77,14 +77,14 @@ class User:
     @retry_on_401
     async def __get_request(self, url: str) -> ClientResponse:
         """Get request that reauthenticates when getting a 401"""
-        return await self.session.get(url, cookies=self.cookies)
+        return await self.websession.get(url, cookies=self.cookies)
 
     @retry_on_401
     async def __post_request(
         self, url: str, headers: dict, data: str
     ) -> ClientResponse:
         """Post request that reauthenticates when getting a 401"""
-        return await self.session.post(
+        return await self.websession.post(
             url, headers=headers, cookies=self.cookies, data=data
         )
 
