@@ -2,6 +2,7 @@
 
 import logging
 from asyncio import CancelledError, TimeoutError
+from typing import Optional
 
 import pydantic
 from aiohttp import ClientSession
@@ -67,9 +68,10 @@ class Api:
 
         return location
 
-    async def get_user(self, email: str, pwd: str) -> User:
-        user = User(email, pwd, self.websession)
-        await user.authenticate()
+    async def get_user(self, email: str, pwd: str, api_key: Optional[str] = None) -> User:
+        user = User(email, pwd, self.websession, api_key)
+        if not api_key:
+            await user.authenticate()
         return user
 
 

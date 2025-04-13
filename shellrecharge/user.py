@@ -1,6 +1,6 @@
 from logging import getLogger
 from re import compile, search
-from typing import AsyncGenerator, Literal
+from typing import AsyncGenerator, Literal, Optional
 
 import pydantic
 from aiohttp import ClientResponse, ClientSession
@@ -9,7 +9,7 @@ from bs4.element import Tag
 from pydantic import ValidationError
 
 from .decorators import retry_on_401
-from .usermodels import Assets, ChargeToken, DetailedChargePoint
+from .usermodels import Assets, ChargeToken, DetailedChargePoint, DetailedAssets
 
 
 class User:
@@ -19,12 +19,14 @@ class User:
     assetUrl = "https://ui-chargepoints.shellrecharge.com"
     userAgent = "Mozilla/5.0 (X11; Linux x86_64; rv:131.0) Gecko/20100101 Firefox/131.0"
 
-    def __init__(self, email: str, pwd: str, websession: ClientSession):
+    def __init__(self, email: str, pwd: str, websession: ClientSession, api_key: Optional[str] = None):
         """Initialize user"""
         self.logger = getLogger("user")
         self.websession = websession
         self.__email = email
         self.__pwd = pwd
+        if api_key:
+            self.cookies = {"tnm_api": api_key}
 
     async def authenticate(self) -> None:
         """Authenticate using email and password and retrieve an api key"""
@@ -88,63 +90,59 @@ class User:
             url, headers=headers, cookies=self.cookies, data=data
         )
 
-    async def get_cards(self) -> AsyncGenerator[ChargeToken, None]:
-        """Get the user's charging cards"""
+    async def _get_assets(self) -> Assets:
+        """Get the user's assets from the asset overview"""
         async with await self.__get_request(
             f"{self.assetUrl}/api/facade/v1/me/asset-overview"
         ) as response:
-            assets = await response.json()
+            result = await response.json()
 
-        if not assets:
+        if not result:
             raise AssetsEmptyError()
 
         try:
             if pydantic.version.VERSION.startswith("1"):
-                Assets.parse_obj(assets)
+                assets = Assets.parse_obj(result)
             else:
-                Assets.model_validate(assets)
+                assets = Assets.model_validate(result)
         except ValidationError as err:
             raise AssetsValidationError(err)
 
-        for token in assets["chargeTokens"]:
+        return assets
+
+    async def get_cards(self) -> AsyncGenerator[ChargeToken, None]:
+        """Get the user's charging cards"""
+        assets = await self._get_assets()
+        for token in assets.chargeTokens:
             yield token
 
     async def get_chargers(self) -> AsyncGenerator[DetailedChargePoint, None]:
         """Get the user's private charge points"""
-        async with await self.__get_request(
-            f"{self.assetUrl}/api/facade/v1/me/asset-overview"
-        ) as response:
-            assets = await response.json()
-
-        if not assets:
-            raise AssetsEmptyError()
-
-        try:
-            if pydantic.version.VERSION.startswith("1"):
-                Assets.parse_obj(assets)
-            else:
-                Assets.model_validate(assets)
-        except ValidationError as err:
-            raise AssetsValidationError(err)
-
-        for charger in assets["chargePoints"]:
+        assets = await self._get_assets()
+        for charger in assets.chargePoints:
             async with await self.__get_request(
-                f"{self.assetUrl}/api/facade/v1/charge-points/{charger['uuid']}"
+                f"{self.assetUrl}/api/facade/v1/charge-points/{charger.uuid}"
             ) as r:
-                details = await r.json()
+                result = await r.json()
 
-                if not details:
+                if not result:
                     raise DetailedChargePointEmptyError()
 
                 try:
                     if pydantic.version.VERSION.startswith("1"):
-                        DetailedChargePoint.parse_obj(details)
+                        details = DetailedChargePoint.parse_obj(result)
                     else:
-                        DetailedChargePoint.model_validate(details)
+                        details = DetailedChargePoint.model_validate(result)
                 except ValidationError as err:
                     raise DetailedChargePointValidationError(err)
 
                 yield details
+
+    async def get_detailed_assets(self) -> DetailedAssets:
+        return DetailedAssets(
+            chargePoints=[charger async for charger in self.get_chargers()],
+            chargeTokens=[card async for card in self.get_cards()],
+        )
 
     async def toggle_charger(
         self,

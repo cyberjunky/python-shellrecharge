@@ -5,7 +5,7 @@ from typing import Literal, Optional
 from pydantic import UUID4, BaseModel, Field
 
 DateTimeISO8601 = str
-ChargePointStatus = Literal["Available", "Unavailable", "Occupied", "Unknown"]
+ChargePointStatus = Literal["Available", "Unavailable", "Occupied", "Unknown", "Charging"]
 ChargePointDetailedStatus = Literal["available", "preparing", "charging", "suspendedev"]
 Vendor = Literal["NewMotion"]
 
@@ -112,8 +112,8 @@ class DetailedEvse(BaseModel):
     currentType: Literal["ac", "dc"]
     evseId: str
     id: UUID4
-    maxPower: str
-    number: str
+    maxPower: int
+    number: int
     status: ChargePointDetailedStatus
     statusDetails: OccupyingToken
 
@@ -144,3 +144,14 @@ class DetailedChargePoint(BaseModel):
     serial: str
     sharing: Literal["private", "public"]
     vendor: Vendor
+
+    def __init__(self, **data):
+        super().__init__(**data)
+        # Pydantic excludes attributes starting with underscore from the model
+        # https://docs.pydantic.dev/latest/concepts/models/#private-model-attributes
+        self._embedded = Embedded.model_validate(data["_embedded"])
+
+
+class DetailedAssets(BaseModel):
+    chargePoints: list[DetailedChargePoint]
+    chargeTokens: list[ChargeToken]
