@@ -9,7 +9,7 @@ from bs4.element import Tag
 from pydantic import ValidationError
 
 from .decorators import retry_on_401
-from .usermodels import Assets, ChargeToken, DetailedChargePoint, DetailedAssets
+from .usermodels import Assets, ChargeToken, DetailedAssets, DetailedChargePoint
 
 
 class User:
@@ -19,7 +19,13 @@ class User:
     assetUrl = "https://ui-chargepoints.shellrecharge.com"
     userAgent = "Mozilla/5.0 (X11; Linux x86_64; rv:131.0) Gecko/20100101 Firefox/131.0"
 
-    def __init__(self, email: str, pwd: str, websession: ClientSession, api_key: Optional[str] = None):
+    def __init__(
+        self,
+        email: str,
+        pwd: str,
+        websession: ClientSession,
+        api_key: Optional[str] = None,
+    ):
         """Initialize user"""
         self.logger = getLogger("user")
         self.websession = websession
