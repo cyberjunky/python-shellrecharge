@@ -13,7 +13,7 @@ def retry_on_401(func: Callable):
 
         if response.status == 401:
             await self.authenticate()
-            response = await func(*args, **kwargs)
+            response = await func(self, *args, **kwargs)
         return response
 
     return wrapper
