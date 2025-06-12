@@ -21,7 +21,7 @@ pip3 install shellrecharge
 
 ## Configuration
 
-Find the EV charger(s) you want to monitor here: https://shellrecharge.com/en-gb/find-a-charge-point look for the Serial number under details section.
+Find the EV charger(s) you want to monitor here: https://ui-map.shellrecharge.com look for the Serial number under details section.
 Then use Add device within Home Assistant and enter the Serial number in the form.
 
 Example:
