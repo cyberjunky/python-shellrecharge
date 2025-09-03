@@ -66,7 +66,7 @@ import aiohttp
 from aiohttp.client_exceptions import ClientError
 
 import shellrecharge
-from shellrecharge import LocationEmptyError, LocationValidationError
+from shellrecharge import LocationEmptyError, LocationValidationError, RateLimitHitError
 
 
 async def main():
@@ -86,6 +86,8 @@ async def main():
         except LocationValidationError as err:
             logging.error("Location validation error {}, report locaton id" % err)
         except (ClientError, TimeoutError, CancelledError) as err:
+            logging.error(err)
+        except RateLimitHitError as err:
             logging.error(err)
 
 
