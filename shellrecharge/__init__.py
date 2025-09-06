@@ -50,6 +50,8 @@ class Api:
                             location = Location.model_validate(result[0])
                     else:
                         raise LocationEmptyError()
+                elif response.status == 429:
+                    raise RateLimitHitError("Rate limit of API has been hit")
                 else:
                     self.logger.exception(
                         "HTTPError %s occurred while requesting %s",
@@ -83,5 +85,11 @@ class LocationEmptyError(Exception):
 
 class LocationValidationError(Exception):
     """Raised when returned Location API data is in the wrong format."""
+
+    pass
+
+
+class RateLimitHitError(Exception):
+    """Raised when the rate limit of the API has been hit."""
 
     pass
