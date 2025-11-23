@@ -163,7 +163,7 @@ class User:
             headers=headers,
             data=body,
         ) as r:
-            return 202 == r.status
+            return 202 == int(r.status)
 
 
 class ShellPageChangedError(Exception):

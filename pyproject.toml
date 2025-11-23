@@ -1,6 +1,6 @@
 [project]
 name = "shellrecharge"
-version = "0.1.22"
+version = "0.1.23"
 description = "Python 3 package to retrieve public and private EV charger data from Shell Recharge"
 authors = [
     {name = "cyberjunky", email = "ron@cyberjunky.nl"},
@@ -31,3 +31,20 @@ build-backend = "pdm.backend"
 
 [tool.pdm]
 distribution = true
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+# Ignore missing imports for packages that may not be installed or lack type stubs
+ignore_missing_imports = true
+
+[project.optional-dependencies]
+dev = [
+    "mypy",
+    "ruff",
+    "black",
+    "isort",
+    "types-beautifulsoup4",  # Type stubs for bs4
+]

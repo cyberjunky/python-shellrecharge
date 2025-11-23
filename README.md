@@ -1,12 +1,14 @@
-# Python: Shell Recharge
-
-Python 3 package to retrieve public EV charger data from Shell Recharge
-
 [![GitHub Release][releases-shield]][releases]
 [![GitHub Activity][commits-shield]][commits]
 [![License][license-shield]](LICENSE)
-
 ![Project Maintenance][maintenance-shield]
+
+[![Donate via PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=for-the-badge&logo=paypal)](https://www.paypal.me/cyberjunkynl/)
+[![Sponsor on GitHub](https://img.shields.io/badge/Sponsor-GitHub-red.svg?style=for-the-badge&logo=github)](https://github.com/sponsors/cyberjunky)
+
+# Python: Shell Recharge
+
+Python 3 package to retrieve public EV charger data from Shell Recharge
 
 ## About
 
@@ -36,9 +38,7 @@ To create a development environment to commit code.
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-pip3 install pdm
-pip3 install ruff
-pdm init
+pip3 install pdm ruff mypy
 
 sudo apt install pre-commit
 pip3 install pre-commit
@@ -97,10 +97,29 @@ if __name__ == "__main__":
     loop.run_until_complete(main())
 ```
 
-## Donations
+## 💖 Support This Project
 
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/cyberjunkynl/)
-[![Sponsor][sponsor-shield]][sponsor]
+If you find this library useful for your projects, please consider supporting its continued development and maintenance:
+
+### 🌟 Ways to Support
+
+- **⭐ Star this repository** - Help others discover the project
+- **💰 Financial Support** - Contribute to development and hosting costs
+- **🐛 Report Issues** - Help improve stability and compatibility
+- **📖 Spread the Word** - Share with other developers
+
+### 💳 Financial Support Options
+
+[![Donate via PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=for-the-badge&logo=paypal)](https://www.paypal.me/cyberjunkynl/)
+[![Sponsor on GitHub](https://img.shields.io/badge/Sponsor-GitHub-red.svg?style=for-the-badge&logo=github)](https://github.com/sponsors/cyberjunky)
+
+**Why Support?**
+- Keeps the project actively maintained
+- Enables faster bug fixes and new features
+- Supports infrastructure costs (testing, AI, CI/CD)
+- Shows appreciation for hundreds of hours of development
+
+Every contribution, no matter the size, makes a difference and is greatly appreciated! 🙏
 
 [commits-shield]: https://img.shields.io/github/commit-activity/y/cyberjunky/python-shellrecharge.svg?style=for-the-badge
 [commits]: https://github.com/cyberjunky/python-shellrecharge/commits/main

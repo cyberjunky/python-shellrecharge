@@ -22,7 +22,7 @@ repos:
   hooks:
   - id: lint
     name: lint
-    entry: make lint
+    entry: bash -c 'cd "$PWD" && if [ -f .venv/bin/ruff ] && [ -f .venv/bin/mypy ]; then .venv/bin/ruff check shellrecharge && .venv/bin/mypy shellrecharge; else (pdm run ruff check shellrecharge 2>/dev/null || python3 -m pdm run ruff check shellrecharge) && (pdm run mypy shellrecharge 2>/dev/null || python3 -m pdm run mypy shellrecharge); fi'
     types: [python]
     language: system
     pass_filenames: false

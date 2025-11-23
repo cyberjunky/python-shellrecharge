@@ -3,7 +3,7 @@ sources = shellrecharge
 
 .PHONY: .pdm  ## Check that PDM is installed
 .pdm:
-	@pdm -V || echo 'Please install PDM: https://pdm.fming.dev/latest/\#installation'
+	@command -v pdm >/dev/null 2>&1 && pdm -V || python3 -m pdm -V || echo 'Please install PDM: https://pdm.fming.dev/latest/\#installation'
 
 .PHONY: .pre-commit  ## Check that pre-commit is installed
 .pre-commit:
@@ -11,27 +11,31 @@ sources = shellrecharge
 
 .PHONY: install  ## Install the package, dependencies, and pre-commit for local development
 install: .pdm .pre-commit
-	pdm install --group :all
+	@command -v pdm >/dev/null 2>&1 && pdm install --group :all || python3 -m pdm install --group :all
 	pre-commit install --install-hooks
 
 .PHONY: refresh-lockfiles  ## Sync lockfiles with requirements files.
 refresh-lockfiles: .pdm
-	pdm update --update-reuse --group :all
+	@command -v pdm >/dev/null 2>&1 && pdm update --update-reuse --group :all || python3 -m pdm update --update-reuse --group :all
 
 .PHONY: rebuild-lockfiles  ## Rebuild lockfiles from scratch, updating all dependencies
 rebuild-lockfiles: .pdm
-	pdm update --update-eager --group :all
+	@command -v pdm >/dev/null 2>&1 && pdm update --update-eager --group :all || python3 -m pdm update --update-eager --group :all
 
 .PHONY: format  ## Auto-format python source files
 format: .pdm
-	pdm run isort $(sources)
-	pdm run black -l 79 $(sources)
-	pdm run ruff format $(sources)
+	@command -v pdm >/dev/null 2>&1 && pdm run isort $(sources) || python3 -m pdm run isort $(sources)
+	@command -v pdm >/dev/null 2>&1 && pdm run black -l 79 $(sources) || python3 -m pdm run black -l 79 $(sources)
+	@command -v pdm >/dev/null 2>&1 && pdm run ruff format $(sources) || python3 -m pdm run ruff format $(sources)
 
 .PHONY: lint  ## Lint python source files
 lint: .pdm
-	pdm run ruff check $(sources)
-	pdm run mypy $(sources)
+	@if [ -f .venv/bin/ruff ] && [ -f .venv/bin/mypy ]; then \
+		.venv/bin/ruff check $(sources) && .venv/bin/mypy $(sources); \
+	else \
+		(pdm run ruff check $(sources) 2>/dev/null || python3 -m pdm run ruff check $(sources)) && \
+		(pdm run mypy $(sources) 2>/dev/null || python3 -m pdm run mypy $(sources)); \
+	fi
 
 .PHONY: codespell  ## Use Codespell to do spellchecking
 codespell: .pre-commit
@@ -39,7 +43,7 @@ codespell: .pre-commit
 
 .PHONY: publish  ## Publish to PyPi
 publish: .pdm
-	pdm build
+	@command -v pdm >/dev/null 2>&1 && pdm build || python3 -m pdm build
 	twine upload dist/*
 
 .PHONY: all  ## Run the standard set of checks performed in CI
