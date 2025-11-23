@@ -28,9 +28,12 @@ license = {text = "MIT"}
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
 
-
 [tool.pdm]
 distribution = true
+
+[tool.pdm.scripts]
+build = "pdm build"
+publish = {composite = ["build", "twine upload dist/*"]}
 
 [tool.mypy]
 python_version = "3.10"
@@ -46,5 +49,6 @@ dev = [
     "ruff",
     "black",
     "isort",
-    "types-beautifulsoup4",  # Type stubs for bs4
+    "types-beautifulsoup4",
+    "twine>=6.2.0",
 ]
