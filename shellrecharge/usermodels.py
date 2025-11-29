@@ -8,6 +8,7 @@ DateTimeISO8601 = str
 ChargePointStatus = Literal["Available", "Unavailable", "Occupied", "Unknown", "Charging", "Faulted"]
 ChargePointDetailedStatus = Literal["available", "preparing", "charging", "suspendedev", "faulted"]
 Vendor = Literal["NewMotion"]
+UpdatedBy = Literal["Feed", "Admin", "TariffService", "Default", "Hubpp"]
 
 
 class ChargeToken(BaseModel):
@@ -73,6 +74,18 @@ class PlugAndCharge(BaseModel):
     capable: Literal[True, False]
 
 
+class Tariff(BaseModel):
+    """Tariff information."""
+
+    startFee: Optional[float] = 0.0
+    perMinute: Optional[float] = 0.0
+    perKWh: Optional[float] = 0.0
+    currency: str
+    updated: DateTimeISO8601
+    updatedBy: UpdatedBy
+    structure: str
+
+
 class LatestOnlineStatus(BaseModel):
     """Last time the charger was online."""
 
@@ -102,6 +115,7 @@ class Connector(BaseModel):
     maxPowerInWatts: int = Field(ge=1000)
     number: int
     numberOfPhases: Literal[1, 3]
+    tariff: Tariff
 
 
 class DetailedEvse(BaseModel):

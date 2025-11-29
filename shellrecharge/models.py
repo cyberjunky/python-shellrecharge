@@ -26,7 +26,7 @@ ConnectorTypes = Literal[
     "Tesla",
     "Unspecified",
 ]
-UpdatedBy = Literal["Feed", "Admin", "TariffService", "Default"]
+UpdatedBy = Literal["Feed", "Admin", "TariffService", "Default", "Hubpp"]
 
 
 class ElectricalProperties(BaseModel):
