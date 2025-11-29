@@ -115,7 +115,7 @@ class Connector(BaseModel):
     maxPowerInWatts: int = Field(ge=1000)
     number: int
     numberOfPhases: Literal[1, 3]
-    tariff: Tariff
+    tariff: Optional[Tariff] = Field(default=None)
 
 
 class DetailedEvse(BaseModel):
