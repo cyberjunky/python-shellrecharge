@@ -17,7 +17,7 @@ class ChargeToken(BaseModel):
     uuid: str
     rfid: str
     printedNumber: str
-    name: str
+    name: str | None = None
 
 
 class OccupyingToken(BaseModel):
