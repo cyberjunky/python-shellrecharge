@@ -8,6 +8,13 @@
 
 # Python: Shell Recharge
 
+> [!CAUTION]
+> **This package is deprecated and no longer maintained.**
+>
+> Shell changed their API and removed all third-party chargers from the Shell Recharge app and map. The data this package was built to retrieve is no longer available, so it can no longer work as intended.
+>
+> No further updates or fixes will be released. The documentation below is kept for reference only.
+
 Python 3 package to retrieve public EV charger data from Shell Recharge
 
 ## About
@@ -124,7 +131,7 @@ Every contribution, no matter the size, makes a difference and is greatly apprec
 [commits-shield]: https://img.shields.io/github/commit-activity/y/cyberjunky/python-shellrecharge.svg?style=for-the-badge
 [commits]: https://github.com/cyberjunky/python-shellrecharge/commits/main
 [license-shield]: https://img.shields.io/github/license/cyberjunky/python-shellrecharge.svg?style=for-the-badge
-[maintenance-shield]: https://img.shields.io/badge/maintainer-%40cyberjunky-blue.svg?style=for-the-badge
+[maintenance-shield]: https://img.shields.io/badge/status-deprecated-red.svg?style=for-the-badge
 [releases-shield]: https://img.shields.io/github/release/cyberjunky/python-shellrecharge.svg?style=for-the-badge
 [releases]: https://github.com/cyberjunky/python-shellrecharge/releases
 [sponsor-shield]: https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86
